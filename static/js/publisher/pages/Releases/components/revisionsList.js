@@ -27,7 +27,7 @@ import {
   isProgressiveReleaseEnabled,
   getPendingRelease,
 } from "../selectors";
-import { relative } from "@sentry/utils";
+import { isProgressiveRelease } from "../helpers.ts";
 
 class RevisionsList extends Component {
   constructor() {
@@ -50,8 +50,9 @@ class RevisionsList extends Component {
     showBuildRequest,
     progressiveBeingCancelled,
   ) {
-    const rowKey = `revision-row-${revision.revision}-${revision.release ? revision.release.channel : new Date().getTime()
-      }`;
+    const rowKey = `revision-row-${revision.revision}-${
+      revision.release ? revision.release.channel : new Date().getTime()
+    }`;
 
     const risk = this.props.filters.risk;
     const track = this.props.filters.track;
@@ -104,7 +105,7 @@ class RevisionsList extends Component {
 
       const progressiveBeingCancelled =
         progressiveReleaseBeingCancelled &&
-          progressiveReleaseBeingCancelled.revision.revision === revision.revision
+        progressiveReleaseBeingCancelled.revision.revision === revision.revision
           ? true
           : false;
 
